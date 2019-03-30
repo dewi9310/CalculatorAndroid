@@ -284,8 +284,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Format yang digunakan tidak valid", Toast.LENGTH_SHORT).show();
                 }else {
                     computeCalculation();
-//                    currentValue.delete(0, currentValue.length());
                 }
+                currentValue.delete(0, currentValue.length());
 
             }
         });
@@ -306,22 +306,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void computeCalculation() {
         if(!Double.isNaN(valueOne)) {
-            if (currentValue.length()>0)
-            valueTwo = Double.parseDouble(String.valueOf(currentValue));
+            if (currentValue.length()>0){
+                valueTwo = Double.parseDouble(String.valueOf(currentValue));
+                if (!Double.isNaN(valueLast)){
+                    valueOne = valueLast;
+                }
+                if(CURRENT_ACTION == ADDITION)
+                    valueOne = this.valueOne + valueTwo;
+                else if(CURRENT_ACTION == SUBTRACTION)
+                    valueOne = this.valueOne - valueTwo;
+                else if(CURRENT_ACTION == MULTIPLICATION)
+                    valueOne = this.valueOne * valueTwo;
+                else if(CURRENT_ACTION == DIVISION)
+                    valueOne = this.valueOne / valueTwo;
 
-            if (!Double.isNaN(valueLast)){
-                valueOne = valueLast;
+                tvResult.setText(decimalFormat.format(valueOne));
             }
-            if(CURRENT_ACTION == ADDITION)
-                valueOne = this.valueOne + valueTwo;
-            else if(CURRENT_ACTION == SUBTRACTION)
-                valueOne = this.valueOne - valueTwo;
-            else if(CURRENT_ACTION == MULTIPLICATION)
-                valueOne = this.valueOne * valueTwo;
-            else if(CURRENT_ACTION == DIVISION)
-                valueOne = this.valueOne / valueTwo;
 
-            tvResult.setText(decimalFormat.format(valueOne));
         }
         else {
             try {
